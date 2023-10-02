@@ -1,0 +1,83 @@
+import { useState } from "react";
+import { useMainState } from "../global/jotai";
+import { Link } from "react-router-dom";
+
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const StepOne = () => {
+  const [anyThing, setAnything] = useMainState();
+
+  console.log(anyThing);
+
+  const [title, setTitle] = useState<string>("");
+  const [image, setImage] = useState<string>("");
+  const [imageView, setImageView] = useState<string>("");
+
+  const imageViewDetail = (e: any) => {
+    const file = e.target.files[0];
+    const view = URL.createObjectURL(file);
+    setImageView(view);
+    setImage(file);
+  };
+
+  return (
+    <center>
+      <div>Step One</div>
+
+      <br />
+      <br />
+
+      <div>
+        <div>
+          <img
+            className="w-[300px] h-[400px] border rounded overflow-hidden object-cover "
+            src={imageView}
+          />
+          <br />
+          <label
+            htmlFor="start"
+            className="bg-red-500 text-white px-4 py-2 my-8 hover:cursor-pointer hover:scale-[1.08]"
+          >
+            upload Title
+          </label>
+
+          <input
+            id="start"
+            type="file"
+            onChange={imageViewDetail}
+            className="w-[300px] h-[40px] border rounded pl-2 outline-none hidden"
+          />
+        </div>
+        <br />
+        <div>
+          <div className="text-red-500">Title</div>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            className="w-[300px] h-[40px] border rounded pl-2 outline-none "
+          />
+        </div>
+
+        <Link to="/step-two">
+          <button
+            className="w-[300px] h-[40px] mt-[30px] text-white bg-purple-500 rounded "
+            onClick={() => {
+              console.log("Title: ", title);
+              console.log("Image: ", image);
+              setAnything({ title, image });
+            }}
+          >
+            Next
+          </button>
+        </Link>
+      </div>
+    </center>
+  );
+};
+
+export default StepOne;
