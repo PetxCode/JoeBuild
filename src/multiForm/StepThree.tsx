@@ -1,13 +1,13 @@
-import { useState } from "react";
 import useMainState from "../global/jotai";
 
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createBeg } from "../api/begAPI";
 
 const StepTwo = () => {
   const [anyThing, setAnything]: any = useMainState();
-
+  const formData = new FormData();
   const schema = yup.object({
     amount: yup.number().required(),
   });
@@ -23,9 +23,18 @@ const StepTwo = () => {
       image: anyThing?.image,
       description: anyThing?.description,
       motivation: anyThing?.motivation,
-      amount,
-    })().then(() => {
-      setAnything(null);
+      amountNeeded: amount,
+    });
+
+    formData.append("amountNeeded", amount);
+    formData.append("title", anyThing.title);
+    formData.append("image", anyThing.image);
+    formData.append("motivation", anyThing.motivation);
+    formData.append("detailDescription", anyThing.description);
+
+    createBeg(formData).then((res) => {
+      // setAnything(null);
+      console.log("viewing: ", res);
     });
 
     console.log(typeof amount);

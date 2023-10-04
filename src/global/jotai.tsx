@@ -1,8 +1,8 @@
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-const mainState = atomWithStorage("myData", {} || null);
-// const mainState = atom({});
+// const mainState = atomWithStorage("myData", {} || null);
+const mainState = atom({});
 
 const useMainState = () => {
   return useAtom(mainState);

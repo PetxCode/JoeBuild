@@ -37,7 +37,7 @@ const StepOne = () => {
     navigate("/step-two");
   });
 
-  //   console.log("viewing: ", image.file);
+  console.log("viewing: ", anyThing);
 
   return (
     <center>
